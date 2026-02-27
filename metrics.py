@@ -60,3 +60,20 @@ def calculate_valid_link_ratio(nodes, adjacency_matrix):
             valid_links += 1
             
     return valid_links / total_links
+
+def calculate_topology_stability(prev_adj, curr_adj):
+    """
+    Topology stability:
+    |E(t) ∩ E(t-1)| / |E(t-1)|
+    """
+    if prev_adj is None:
+        return 1.0
+
+    prev_edges = set(zip(*np.where(np.triu(prev_adj, 1) == 1)))
+    curr_edges = set(zip(*np.where(np.triu(curr_adj, 1) == 1)))
+
+    if len(prev_edges) == 0:
+        return 1.0
+
+    common = prev_edges & curr_edges
+    return len(common) / len(prev_edges)

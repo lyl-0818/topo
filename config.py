@@ -83,3 +83,8 @@ BREAK_RATIOS = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5]
 COLOR_NORMAL = 'blue'
 COLOR_FAULTY = 'red'
 COLOR_LINK = 'green'
+
+# ==========================================
+# 8. Temporal topology
+# ==========================================
+TEMPORAL_STEPS = 10     # 每个蒙特卡洛中连续构图的步数

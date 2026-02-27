@@ -28,6 +28,14 @@ class RadarASIC:
         """
         执行拓扑控制循环 (保持不变)
         """
+        predicted_status = None
+
+        if self.mode == 'SMART':
+            predicted_status = []
+            for node in nodes:
+                predicted_status.append(
+                self._npu_inference(node.history_vel)
+                )
         N = len(nodes)
         adjacency_matrix = np.zeros((N, N))
         positions = np.array([n.pos for n in nodes])
@@ -74,9 +82,7 @@ class RadarASIC:
 
                 # B. 具身智能判定
                 if self.mode == 'SMART':
-                    pred_status_j = self._npu_inference(node_j.history_vel)
-                    pred_status_i = self._npu_inference(node_i.history_vel)
-                    if pred_status_j != cfg.STATUS_NORMAL or pred_status_i != cfg.STATUS_NORMAL:
+                   if predicted_status[i] != cfg.STATUS_NORMAL or predicted_status[j] != cfg.STATUS_NORMAL:
                         continue 
 
                 # C. 握手概率
